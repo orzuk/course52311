@@ -1,0 +1,62 @@
+Instructions for using github: 
+
+
+
+0. First, if you don't have a github account, set an account at: https://github.com/
+
+
+
+
+Remark: The following instructions are for using command line instructions in linux/unix or cygwin. 
+Alternatively, you can download a git client for windows from here: https://git-scm.com/downloads
+and use the client to perform the operations listed below (instead of typing the commands in command line). 
+
+
+1. After you've set up an account, You'll need to clone the course github repository. 
+The course repository is available at: https://github.com/orzuk/course52311
+
+First, you will need to clone the repository. To do so, you can create an empty directory 
+in your computer. Then go to this directory, and type in command line: 
+git clone https://github.com/orzuk/course52311.git
+
+Or, alternatively: 
+git clone git@github.com:orzuk/course52311.git
+
+after this, the entire repository should be copied into your directory 
+
+2. You'll need to ask me to invite you to the repository so you can make changes and upload them. 
+Send me an email with your user name 
+
+3. You should always be synchronized with the latest version of the repository, as there will 
+be changes made by others. To get the latest version, you should type in the directory of your repository:
+git pull origin master
+
+4. If you make a local change (like adding/changing a file), you should add it to the repository as follows: 
+git add <file-name>
+
+Then: 
+git commit -m "Comment explaining your change" 
+
+5. Finally, if you want your local change to be shared by everyone, you should upload it to the shared repository. 
+To do so, you need to type: 
+git push origin master
+
+
+Note: Before you push your change to the repository, you always have to first get the updated repository (using 'git pull origin master') 
+
+
+6. All of the above assumes you don't have conflicts. Conflicts arise for example when two or more people are working on the same file simoltaniously. 
+In that case, git will tell you that you have conflicts and you need to resolve them before you can push your changes. 
+You can do so, for example, by stashing your changes: type 'git stash' and git will ignore your latest changes. 
+Then you can pull the latest changes made by others, then make your changes again, and then add, commit and push 
+
+
+
+
+
+
+These are just basic instructions showing some basic operations. To get a better undestanding of how git works, please go here: https://guides.github.com/
+
+
+
+
