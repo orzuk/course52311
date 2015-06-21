@@ -10,6 +10,8 @@ Detailed instructions with a list of possible projects is available [here](docs/
 
 Instructions for using git are available [here](docs/github_instructions.txt)
 
+Please list the project you chose [here](docs/ListofProjects.xlsx)
+
 
 
 
