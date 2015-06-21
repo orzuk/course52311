@@ -11,7 +11,7 @@ Detailed instructions with a list of possible projects is available [here](docs/
 Instructions for using git are available [here](docs/github_instructions.txt). 
 See also [this](https://www.youtube.com/watch?v=73I5dRucCds) short video guide 
 
-Please list the project you chose [here](docs/ListofProjects.xlsx)
+Please list the project you choose [here](docs/ListofProjects.xlsx)
 
 
 
