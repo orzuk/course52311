@@ -1,6 +1,7 @@
 Instructions for using github: 
 
-
+You can find nice Github tutorial for beginners here
+https://www.youtube.com/watch?v=73I5dRucCds
 
 0. First, if you don't have a github account, set an account at: https://github.com/
 
