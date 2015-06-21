@@ -52,9 +52,6 @@ Then you can pull the latest changes made by others, then make your changes agai
 
 
 
-
-
-
 These are just basic instructions showing some basic operations. To get a better undestanding of how git works, please go here: https://guides.github.com/
 
 

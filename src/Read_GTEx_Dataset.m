@@ -11,7 +11,7 @@ ensemble_ids = [];
 gene_ids = []; 
 Data = []; 
 % Loop over chunks and read them 
-for c = 1:50 
+for c = 1:100 
        sprintf('Read GTEx File %ld', c)
     if(c<=10)
         c_str = ['0' num2str(c-1)];
