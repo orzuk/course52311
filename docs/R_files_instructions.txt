@@ -1,0 +1,9 @@
+If you want to read one of the Video data files to R all you need to do is use the function
+readRDS("filename"). (don't use here the mat files, but the R files).
+
+Example
+file.name = C:/Users/username/Desktop/course52311/data/Video/Charlie Chaplin - The Lions Cage_1" 
+vid_data_1 = readRDS(file.name)
+names(vid_data_1).
+
+
