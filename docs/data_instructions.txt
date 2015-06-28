@@ -1,0 +1,45 @@
+Accessing Data: 
+==============
+
+You can now easily access the two datasets using either R or Matlab: 
+
+1. Video Data
+
+R:
+==
+Data is available in 103 separate files with names: data\Video\Charlie Chaplin - The Lions Cage_X
+
+If you want to read one of the Video data files to R all you need to do is use the function
+readRDS("filename"). (don't use here the mat files, but the R files).
+
+Example:
+file.name = C:/Users/username/Desktop/course52311/data/Video/Charlie Chaplin - The Lions Cage_1" 
+vid_data_1 = readRDS(file.name)
+names(vid_data_1).
+
+Matlab: 
+=======
+Data is available in 103 separate files with names: data\Video\Charlie Chaplin - The Lions Cage_X.mat
+for X from 1 to 103. Loading each will give you a 3-dim. array called VideoDataIntensity_3D with 50 consecutive frames. 
+Each element represents the intensity of a certain pixel at a certain frame. 
+
+
+2. Gene Expression Data
+
+R:
+==
+
+
+Matlab: 
+=======
+You can download the entire data by running the script 'Read_GTEx_Dataset'. It will give you a 3-dimensional 
+array. The data is available in the .mat file:  AllSamples.rpkm_3D.mat 
+
+
+
+Note that the dataset available is pretty sparse. only for ~37% of (tissueXindividual) combination there is data. 
+You can look at the figure at data/GTEx/IndividualByTissueDataAvailability.jpg to see which datasets are available. 
+This situation of missing data is pretty common in real datasets. 
+One interesting project would be to try to predict the missing data (this is often called 'imputation'). 
+Another, easier option, is to perform the analysis only on a subset of tissues and individuals, such that for 
+this subset the data is complete. (there are ~8-9 tissues which were measured for most individuals). 
