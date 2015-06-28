@@ -4,6 +4,8 @@ data_dir = 'C:/Users/user/Documents/GitHub/course52311/data';
 
 video_file = 'Video/Charlie Chaplin - The Lions Cage.mp4'
 
+    num_frame_bins = 103; bin_size = ceil(num_frames/num_frame_bins)
+
 if(~exist(fullfile(data_dir, strrep(video_file, 'mp4', 'mat')), 'file')) % read an .mp4 file into multidimensional Matlab array
     V = VideoReader(fullfile(data_dir, video_file));
     
@@ -16,7 +18,6 @@ if(~exist(fullfile(data_dir, strrep(video_file, 'mp4', 'mat')), 'file')) % read 
     VideoDataIntensity = reshape(VideoDataIntensity, [frame_length, frame_width, num_frames]);
 
     % Split data into bins
-    num_frame_bins = 103; bin_size = ceil(num_frames/num_frame_bins)
     for i=1:num_frame_bins
         sprintf('Save frames in bin %ld', i) 
         cur_frame_inds = ((i-1)*bin_size+1):min(i*bin_size, num_frames);
@@ -32,7 +33,17 @@ if(~exist(fullfile(data_dir, strrep(video_file, 'mp4', 'mat')), 'file')) % read 
     
     
 else
-    load(fullfile(data_dir, strrep(video_file, 'mp4', 'mat')));  % load multi-dimensional array containing video
+%    load(fullfile(data_dir, strrep(video_file, 'mp4', 'mat')));  % load multi-dimensional array containing video
+
+    VideoDataIntensity = zeros([frame_length, frame_width, num_frames], 'single');
+    for i=1:num_frame_bins % here recommended to load only a subset of bins to avoid memory problems
+        cur_frame_inds = ((i-1)*bin_size+1):min(i*bin_size, num_frames);
+
+        load(fullfile(data_dir, strrep(video_file, '.mp4', ['_' num2str(i) '.mat']))); 
+        VideoDataIntensity(:,:,cur_frame_inds) = VideoDataIntensity_3D; 
+        
+    end
+
 end
 
 %% CC = VideoReader(fullfile(data_dir, 'Video/CC_1916_10_02_ThePawnshop_512kb.mp4')); 
