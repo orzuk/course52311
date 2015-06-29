@@ -120,11 +120,17 @@ if(~load_data)
         % get rid of genes with low expression 
         expression_threshold = 1; 
         max_gene_expression = squeeze(max(max(ExpressionData_3D_Array))); 
+        min_gene_expression = squeeze(min(min(ExpressionData_3D_Array))); 
         keep_genes = find(max_gene_expression > expression_threshold); 
         gene_ids = gene_ids(keep_genes); 
         ensemble_ids = ensemble_ids(keep_genes);
         ExpressionData_3D_Array = ExpressionData_3D_Array(:,:,keep_genes); 
         num_genes = length(keep_genes); 
+
+        
+        
+        % Threshold also individual low expression values 
+        ExpressionData_3D_Array(ExpressionData_3D_Array<expression_threshold/5) = 0.0; 
         
         %    save(fullfile(data_dir, 'GTEx/AllSamples.rpkm_3D.mat'), ...
         %        'ExpressionData_3D_Array', 'tissue_by_individual_matrix', ...
@@ -132,15 +138,21 @@ if(~load_data)
         inds_3d = find(ExpressionData_3D_Array);
         vals_3d = ExpressionData_3D_Array(inds_3d); 
         inds_3d = uint32(inds_3d); % convert to int to save storage 
+        vals_3d = ceil(vals_3d*1000)/1000; % round to save storage 
         save(fullfile(data_dir, 'GTEx/AllSamples.rpkm_3D.mat'), ...
-            'inds_3d', 'vals_3d', 'tissue_by_individual_matrix', ...
+            'inds_3d', 'tissue_by_individual_matrix', ...
             'num_tissues', 'num_individuals', 'num_genes', ...
             'gene_ids', 'ensemble_ids',  'tissue_ids', 'individual_ids');
+        
+        
+        save(fullfile(data_dir, 'GTEx/AllSamples.rpkm_3D_values.mat'), 'vals_3d');
+        
     end
     
     
 else % Here load data:
     load(fullfile(data_dir, 'GTEx/AllSamples.rpkm_3D.mat'));
+    load(fullfile(data_dir, 'GTEx/AllSamples.rpkm_3D_values.mat'));
     ExpressionData_3D_Array = zeros(num_tissues, num_individuals, num_genes, 'single');
     ExpressionData_3D_Array(inds_3d) = vals_3d;
 end

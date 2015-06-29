@@ -40,7 +40,9 @@ You can get for two tissues the set of individuals which have expression for bot
 Matlab: 
 =======
 You can download the entire data by running the script 'Read_GTEx_Dataset'. It will give you a 3-dimensional 
-array. The data is available in the .mat file:  AllSamples.rpkm_3D.mat 
+array. The data is available in the following two .mat files (data was separated to two files becaues together they were too large for uploading to github):  
+AllSamples.rpkm_3D.mat (indices and labels), 
+AllSamples.rpkm_3D_values.mat (expression values) 
 
 
 
