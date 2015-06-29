@@ -1,4 +1,3 @@
-require(R.matlab) 
 ##ENTER YOUR MASTER DIRECTORY
 file.path = "C:/Users/Avishay/Desktop/course52311/data/GTEx/"
 
