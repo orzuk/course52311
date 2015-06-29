@@ -13,6 +13,7 @@ See also [this](https://www.youtube.com/watch?v=73I5dRucCds) short video guide
 
 Please list the project you choose [here](docs/ListofProjects.xlsx)
 
+Instructions for accessing the datasets using R and Matlab are available [here](docs/data_instructions.txt). 
 
 
 
