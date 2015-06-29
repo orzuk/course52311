@@ -5,8 +5,8 @@ data_dir = 'C:/Users/user/Documents/GitHub/course52311/data';
 %D = xlsread(fullfile(data_dir, 'AllSamples.rpkm.gct'));
 %D2 = tdfread(fullfile(data_dir, 'GTEx/AllSamples.rpkm.00'));
 num_files = 100; % split GTEx data to files
-convert_to_mat_files = 0; % if 1 - convery raw data to .mat files
-load_data = 1;
+convert_to_mat_files = 1; % if 1 - convery raw data to .mat files
+load_data = 0;
 
 data_annotations_file = ...
     fullfile(data_dir, 'GTEx/GTEx_Analysis_Annotations_Sample_DS__Pilot_V3.txt'); % get annotations
@@ -57,7 +57,7 @@ if(~load_data)
                 gene_ids = [];
                 Data = [];
                 
-                new_D = [vec2column(sample_ids) vec2column(individual_ids) tissue_ids tissue_detailed_ids]
+                new_D = [vec2column(sample_ids) vec2column(individual_ids) tissue_ids tissue_detailed_ids];
                 new_D = [ [cell(4,2) new_D']' D']';
                 new_D2 = num2str_cell(new_D, 2);
                 new_D2 = new_D2';
@@ -65,10 +65,7 @@ if(~load_data)
                 savecellfile(new_D2, fullfile(data_dir, ['GTEx/AllSamples.rpkm.' c_str '.txt']));
                 xlswrite(fullfile(data_dir, ['GTEx/AllSamples.rpkm.' c_str '.xlsx']), new_D2)
                 
-                
-                
-                
-            else
+            else % c>1 
                 D = D(2:end,:);
             end
             cur_ensemble_ids = D(1:end-1,1);
@@ -78,18 +75,19 @@ if(~load_data)
             
             cur_data = single(cell2mat(D(1:end-1,3:end)));
             Data = [Data' cur_data']';
-            
-            save(fullfile(data_dir, 'GTEx/AllSamples.rpkm.mat'), ...
-                'Data', 'sample_ids', 'gene_ids', 'ensemble_ids', ...
-                'tissue_ids', 'tissue_detailed_ids', 'individual_ids');
+            if(c==num_files) % save only at the end!
+                save(fullfile(data_dir, 'GTEx/AllSamples.rpkm.mat'), ...
+                    'Data', 'sample_ids', 'gene_ids', 'ensemble_ids', ...
+                    'tissue_ids', 'tissue_detailed_ids', 'individual_ids');
+            end
         end
     else % here read .mat files and build a 3D array representing samples
-        C = load(fullfile(data_dir, 'GTEx/AllSamples.rpkm.mat'));
+        load(fullfile(data_dir, 'GTEx/AllSamples.rpkm.mat'));
         
         [tissue_ids_unique tissue_ids_unique_inds] = unique_with_inds(tissue_ids)
         [individual_ids_unique individual_ids_unique_inds] = unique_with_inds(individual_ids)
-        num_samples = length(C.sample_ids);
-        num_genes = length(C.gene_ids);
+        num_samples = length(sample_ids);
+        num_genes = length(gene_ids);
         num_tissues = length(tissue_ids_unique);
         num_individuals = length(individual_ids_unique);
         sparsity = num_samples / (num_individuals*num_tissues);
@@ -113,19 +111,31 @@ if(~load_data)
             for i=1:num_individuals
                 if(tissue_by_individual_matrix(t,i))
                     cur_ind = intersect(tissue_ids_unique_inds{t}, individual_ids_unique_inds{i});
-                    ExpressionData_3D_Array(t,i,:) = C.Data(:,cur_ind(1)); % choose first in case of replicate
+                    ExpressionData_3D_Array(t,i,:) = Data(:,cur_ind(1)); % choose first in case of replicate
                 end
             end
         end
+        
+        
+        % get rid of genes with low expression 
+        expression_threshold = 1; 
+        max_gene_expression = squeeze(max(max(ExpressionData_3D_Array))); 
+        keep_genes = find(max_gene_expression > expression_threshold); 
+        gene_ids = gene_ids(keep_genes); 
+        ensemble_ids = ensemble_ids(keep_genes);
+        ExpressionData_3D_Array = ExpressionData_3D_Array(:,:,keep_genes); 
+        num_genes = length(keep_genes); 
+        
         %    save(fullfile(data_dir, 'GTEx/AllSamples.rpkm_3D.mat'), ...
         %        'ExpressionData_3D_Array', 'tissue_by_individual_matrix', ...
         %        'gene_ids', 'tissue_ids', 'individual_ids');
         inds_3d = find(ExpressionData_3D_Array);
         vals_3d = ExpressionData_3D_Array(inds_3d); 
+        inds_3d = uint32(inds_3d); % convert to int to save storage 
         save(fullfile(data_dir, 'GTEx/AllSamples.rpkm_3D.mat'), ...
             'inds_3d', 'vals_3d', 'tissue_by_individual_matrix', ...
             'num_tissues', 'num_individuals', 'num_genes', ...
-            'gene_ids', 'tissue_ids', 'individual_ids');
+            'gene_ids', 'ensemble_ids',  'tissue_ids', 'individual_ids');
     end
     
     
