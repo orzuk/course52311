@@ -1,6 +1,9 @@
+# Read GTEx Data (from Eyal Ben David)
 
-#### A function that takes the global expression matrix "expressionData", a vector of sample names "sampleList" that corresponds to the column names of expressionData
-#### a vector of tissue names "tissueList" that links sample names to tissues, and optional arguments for filtering based on expression and IQR.
+#### A function that takes the global expression matrix "expressionData", 
+#### a vector of sample names "sampleList" that corresponds to the column names of expressionData
+#### a vector of tissue names "tissueList" that links sample names to tissues, 
+#### and optional arguments for filtering based on expression and IQR.
 makeTissueExpressionSet<-function(expressionData,sampleList,tissueList,tissue,expCutoff=NULL,IQRcutoff=NULL)
 {
   samplesTissue<- sampleList[tissueList==tissue]
