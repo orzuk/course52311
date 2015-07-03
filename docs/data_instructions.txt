@@ -28,13 +28,11 @@ Each element represents the intensity of a certain pixel at a certain frame.
 
 R:
 ==
-The function dataExample.R can be used to read the data from the file: 'AllSamples.rpkm.gct' and annotations 
-from the file: 'GTEx_Analysis_Annotations_Sample_DS__Pilot_V3.txt'.
-The expression matrix (representing a 3dim array) is in the variable 'express'. 
-Each row represents a gene. Each column represents an (tissue,individual) pair. 
-For each column the tissue and individual ids are given by the vectors: tissue_ids, individual_ids. 
-You can get the expression matrix for a specific tissue using the function: makeTissueExpressionSet
-You can get for two tissues the set of individuals which have expression for both using the function: intersectExpressionTablesOnSubjects
+The function read_GTEx_data.R can be used to read the data from the files:
+AllSamples_rpkm_3D (indices and labels)
+AllSamples_rpkm_3D_values (expression values) .
+It will give you a 3-dimensional array "ExpressionData_3D_Array".
+(be sure you enter the right file.path to first line (the path of the file).
 
 
 Matlab: 
